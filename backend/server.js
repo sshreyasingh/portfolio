@@ -5,7 +5,13 @@ const cors = require('cors');
 const contactRoutes = require('./routes/contact');
 const projectRoutes = require('./routes/project');
 
+const path = require("path");
 
+app.use(
+  require("express").static(
+    path.join(__dirname, "../frontend")
+  )
+);
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -33,12 +39,13 @@ app.get('/', (req, res) => {
   res.sendFile(__dirname + '/../frontend/index.html');
 });
 
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+// app.listen(PORT, () => {
+//   console.log(`Server running on port ${PORT}`);
+// });
 
 mongoose.connection.once('open', () => {
   console.log("Connected DB:", mongoose.connection.name);
 });
 
+module.exports = app;
 
